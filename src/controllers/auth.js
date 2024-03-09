@@ -3,7 +3,7 @@ import { setDoc, doc, collection, addDoc, getDocs, query, where, updateDoc } fro
 import { auth, googleProvider } from "../firebase";
 import { db } from "../firebase.js"
 
-export async function signUpGoogle(){
+export async function signUpGoogle(game){
     try{
         const result = await signInWithPopup(auth, googleProvider);
 
@@ -11,8 +11,13 @@ export async function signUpGoogle(){
         const adittionalInfo = getAdditionalUserInfo(result); 
 
         if(adittionalInfo.isNewUser){
-            const usersCollection = collection(db, "users");
-            await setDoc(doc(usersCollection, result.user.email), {id: result.user.email, name: result.user.displayName, picture: result.user.phtoURL, agrupationsAssociated: [], phone:"", password:""})
+            await addDoc(collection(db, "users"), {
+                nombre: result.user.displayName,
+                username: result.user.email.split("@")[0],
+                email: result.user.email,
+                juego_preferido: game,
+                membresias: [],
+              });
         }
         
 
@@ -57,10 +62,10 @@ export async function loginWithCredentials(email, password){
 }
 
 
-export async function registerWithCredentials(name, email, password, number, carrer){
+export async function registerWithCredentials(name, username, email, password, game){
     try{
         const {user} = await createUserWithEmailAndPassword(auth, email, password);
-        await createUserData(user.uid, name, email, number, carrer)
+        await createUserData(name, username, email, game)
         return user;
     } catch (error) {
         alert(error);
@@ -69,34 +74,41 @@ export async function registerWithCredentials(name, email, password, number, car
     }
 }
 
-export async function createUserData (id, name, email, number, carrer){
-    const usersCollection = collection(db, "users");
-    const data = {id, name, email, number, carrer};
-    await addDoc(usersCollection, data);
+export async function createUserData (name, username, email, game){
+    await addDoc(collection(db, "users"), {
+        nombre: name,
+        username: username,
+        email: email,
+        juego_preferido: game,
+        membresias: [],
+      });
 }
 
 
-export async function getUserData(id){
+export async function getUserData(email){
     const usersCollection = collection(db, "users");
-    const userQuery = query(usersCollection, where("id", "==", id));
+    const userQuery = query(usersCollection, where("email", "==", email));
     const userSnapshot = await getDocs(userQuery);
     const users = userSnapshot.docs.map((doc) => doc.data()); 
 
     return users[0];
 }
 
-export async function getUserId(id){
+export async function getUserId(email){
     const usersCollection = collection(db, "users");
-    const userQuery = query(usersCollection, where("id", "==", id));
+    const userQuery = query(usersCollection, where("email", "==", email));
     const userSnapshot = await getDocs(userQuery);
-
-    return userSnapshot.docs[0].ref.path;
+    return userSnapshot.docs[0].ref.path.split("/")[1];
 }
 
 
-export async function updateUserData(id, name, email, number, carrer){
+export async function updateUserData(name, username, email, game){
     const usersCollection = collection(db, "users");
-    const ref = await getUserId(id);
-    const parts = ref.split("/");
-    await updateDoc(doc(usersCollection, parts[1]), {id, name, email, number, carrer})
+    const ref = await getUserId(email);
+    await updateDoc(doc(usersCollection, ref), {
+        nombre: name,
+        username: username,
+        email: email,
+        juego_preferido: game,
+        membresias: [],})
 }

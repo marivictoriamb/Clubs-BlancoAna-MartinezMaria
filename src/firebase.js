@@ -4,13 +4,13 @@ import {getStorage} from "firebase/storage";
 import {browserLocalPersistence, getAuth, GoogleAuthProvider} from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAI1XeopjhBWzuZ1SUFdQX7sNHyaboYV14",
-  authDomain: "login-1a9a8.firebaseapp.com",
-  projectId: "login-1a9a8",
-  storageBucket: "login-1a9a8.appspot.com",
-  messagingSenderId: "574920295891",
-  appId: "1:574920295891:web:d5f0caf2021db7631b1b26",
-  measurementId: "G-T360MHW6X9"
+  apiKey: "AIzaSyAa87wvUYyYTYcb7mzAZUPQOqIivLYqvtQ",
+  authDomain: "clubs-947b2.firebaseapp.com",
+  projectId: "clubs-947b2",
+  storageBucket: "clubs-947b2.appspot.com",
+  messagingSenderId: "440638820993",
+  appId: "1:440638820993:web:4b33c0d84e341d8f91b380",
+  measurementId: "G-PVQES351Q0"
 };
 
 export const app = initializeApp(firebaseConfig);

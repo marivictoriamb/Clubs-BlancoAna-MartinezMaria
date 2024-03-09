@@ -11,22 +11,6 @@
   height: 100%;
 }
 
-.Top1{
-  align-self: flex-start;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
-}
-
-.Top2{
-  align-self: flex-end;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 80%;
-}
-
 .Photo, .Information{
   width: 50%;
   min-height: 100vh;

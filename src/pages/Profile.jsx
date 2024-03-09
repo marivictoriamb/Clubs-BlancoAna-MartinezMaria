@@ -2,23 +2,25 @@ import { useNavigate } from "react-router-dom";
 import { getUserData, updateUserData } from "../controllers/auth";
 import { useUser } from "../hooks/user";
 import { useState } from "react";
+import { useGames } from "../controllers/api";
 
 export default function Profile(){
     const navigate = useNavigate();
     const user = useUser();
+    const games = useGames();
 
     const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [carrer, setCarrer] = useState("");
+    const [username, setUsername] = useState("");
+    const [game, setGame] = useState("");
     const [email, setEmail] = useState("");
     restoreData();
 
     async function restoreData(){
         if (user!= null && name == ""){
-            const data = await getUserData(user.uid);
-            setName(data.name);
-            setPhone(data.number);
-            setCarrer(data.carrer);
+            const data = await getUserData(user.email);
+            setName(data.nombre);
+            setUsername(data.username)
+            setGame(data.juego_preferido);
             setEmail(data.email);
 
         }
@@ -26,33 +28,25 @@ export default function Profile(){
     }    
 
     async function handleData(){
-        updateUserData(user.uid, name, email, phone, carrer);
+        updateUserData(name, username, email, game);
         restoreData();
     }
 
     return (
         <div>
+            <button className="Back" onClick={()=> navigate("/landingadmin")}>Regresar </button>
             <form>
             <label className="Nombre">Nombre: <input defaultValue={name} onChange={(e) => {setName(e.target.value)}}></input></label>
-            <label className="Telefono">Telefono: <input defaultValue={phone} onChange={(e) => setPhone(e.target.value)}></input></label>
-            <label className="Carrera">Carrera: <select value={carrer} name="CarrerOption" onChange={(e) => setCarrer(e.target.value)}>
-                            <option value="Ingenieria Civil"> Ingenieria Civil </option>
-                            <option value="Ingenieria Mecanica"> Ingenieria Mecanica </option>x
-                            <option value="Ingenieria Produccion"> Ingenieria Produccion </option>
-                            <option value="Ingenieria Quimica"> Ingenieria Quimica </option>
-                            <option value="Ingenieria Electrica"> Ingenieria Electrica </option>
-                            <option value="Ingenieria Sistemas"> Ingenieria Sistemas </option>
-                            <option value="Ciencias Administrativas"> Ciencias Administrativas </option>
-                            <option value="Economia Empresarial"> Economia Empresarial </option>
-                            <option value="Contaduria Publica"> Contaduria Publica </option>
-                            <option value="Psicologia"> Psicologia </option>
-                            <option value="Matematicas Industriales"> Matematicas Industriales </option>
-                            <option value="Educacion"> Educacion </option>
-                            <option value="Idiomas Modernos"> Idiomas Modernos </option>
-                            <option value="Estudios Liberales"> Estudios Liberales </option>
-                            <option value="Derecho"> Derecho </option>
-                        </select>x</label>
-            <label className="Correo">Correo: <input defaultValue={email} onChange={(e) => setEmail(e.target.value)}></input></label>
+            <label className="Username">Username: <input defaultValue={username} onChange={(e) => {setUsername(e.target.value)}}></input></label>
+            <label className="Correo">Correo: {email}</label>
+            <label className="Carrera">Videojuego Preferido: <select value={game} name="VideojuegoPreferido" onChange={(e) => setGame(e.target.value)}>
+            {games.isLoading  ? (
+                  <option key={"loading"}> . . .</option>
+              ) : (
+                  games.data.map((game, id) => (<option key={id} >{game.titulo}</option>
+                  ))
+              )}
+                        </select></label>
             <button type="button" onClick={() => {handleData()}}>Actualizar</button>
             </form>
             
@@ -60,3 +54,4 @@ export default function Profile(){
     );
 
 }
+

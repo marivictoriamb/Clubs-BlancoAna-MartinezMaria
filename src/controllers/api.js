@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
-import { getAgrupations } from "./agrupaciones";
+import { getClubs } from "./clubs";
+import { getGames } from "./games";
 
-export function useAgrupations(){
+export function useClubs(){
     const [data, setData] = useState(null);
 
     useEffect(() => {
         async function cargarDatos(){
-            const agrupaciones = await getAgrupations();
-            setData(agrupaciones);
+            const clubs = await getClubs();
+            setData(clubs);
+        }
+
+        cargarDatos();
+    }, [])
+
+    const isLoading = data == null;
+
+    return {data, isLoading};
+}
+
+
+export function useGames(){
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        async function cargarDatos(){
+            const games = await getGames();
+            setData(games);
         }
 
         cargarDatos();
