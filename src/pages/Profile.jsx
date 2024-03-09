@@ -3,6 +3,7 @@ import { getUserData, updateUserData } from "../controllers/auth";
 import { useUser } from "../hooks/user";
 import { useState } from "react";
 import { useGames } from "../controllers/api";
+import { getGameById, getGameId } from "../controllers/games";
 
 export default function Profile(){
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function Profile(){
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [game, setGame] = useState("");
+    const [gameID, setGameID] = useState("");
     const [email, setEmail] = useState("");
     restoreData();
 
@@ -20,16 +22,23 @@ export default function Profile(){
             const data = await getUserData(user.email);
             setName(data.nombre);
             setUsername(data.username)
-            setGame(data.juego_preferido);
+            setGameID(data.juego_preferido);
             setEmail(data.email);
+            const value = await getGameById(data.juego_preferido);
+            setGame(value.titulo);
 
         }
         
     }    
 
+    async function handleGame(value){
+        const id = await getGameId(value);
+        setGameID(id);
+    }
+
     async function handleData(){
-        updateUserData(name, username, email, game);
-        restoreData();
+        await updateUserData(name, username, email, gameID);
+        await restoreData();
     }
 
     return (
@@ -39,7 +48,7 @@ export default function Profile(){
             <label className="Nombre">Nombre: <input defaultValue={name} onChange={(e) => {setName(e.target.value)}}></input></label>
             <label className="Username">Username: <input defaultValue={username} onChange={(e) => {setUsername(e.target.value)}}></input></label>
             <label className="Correo">Correo: {email}</label>
-            <label className="Carrera">Videojuego Preferido: <select value={game} name="VideojuegoPreferido" onChange={(e) => setGame(e.target.value)}>
+            <label className="Carrera">Videojuego Preferido: <select value={game} name="VideojuegoPreferido" onChange={(e) => {handleGame(e.target.value), setGame(e.target.value)}}>
             {games.isLoading  ? (
                   <option key={"loading"}> . . .</option>
               ) : (

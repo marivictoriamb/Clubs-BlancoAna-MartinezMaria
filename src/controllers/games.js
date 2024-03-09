@@ -1,5 +1,5 @@
 import { db } from "../firebase.js"
-import { collection, getDocs, query, where, setDoc, doc} from "firebase/firestore"
+import { collection, getDocs, query, where, doc, getDoc} from "firebase/firestore"
 
 export async function getGames(){
     const gamesCollection = collection(db, "games");
@@ -34,4 +34,11 @@ export async function getGameId(id){
     const gamesSnapshot = await getDocs(gamesQuery);
 
     return gamesSnapshot.docs[0].ref.path.split("/")[1];
+}
+
+export async function getGameById(id){
+    const gameRef = doc(db, "games", id);
+    const gameSnapshot = await getDoc(gameRef);
+
+    return gameSnapshot.data();
 }
