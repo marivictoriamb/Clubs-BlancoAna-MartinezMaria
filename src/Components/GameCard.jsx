@@ -1,26 +1,16 @@
 import { getUserData } from '../controllers/auth';
 import { getGameId } from '../controllers/games';
+import { favoriteGame } from '../hooks/favoriteGame';
 import { useUser } from '../hooks/user';
 import styles from './ClubCard.module.css'
 
 function GameCard({name, gender, description}){   
-    const yes = "./public/star.png";
-    const nou = "./public/console.png";
     const user = useUser();
-
-    async function ask(){
-        const id = await getGameId(name);
-        const question = await getUserData(user.email);
-        if (question.juego_preferido == id){
-            return yes;
-        } else{
-            return nou;
-        }
-    }
+    const fav = favoriteGame(name);
 
     return(
         <div className={styles.All}>
-            <card className={styles.Card}>
+            <div className={styles.Card}>
                 <div className={styles.banner}>
                     <div className={styles.Controler}>
                         <div className={styles.Image}>
@@ -31,10 +21,16 @@ function GameCard({name, gender, description}){
                 
                 <div className={styles.menu}>
                     <h2 className={styles.Name}>{name}</h2>
-                    <div className={styles.Gender}>{gender}<img alt="fav" src={ask()} style={{width: "1.5vw", height:"1.5vw"}}/></div>
-                    <desc className={styles.Description}>{description}</desc>
+                    <div className={styles.Gender}>{gender}
+                    {fav.isLoading  ? (
+                        <img alt="fav" src="./public/console.png" style={{width: "1.5vw", height:"1.5vw"}}/>
+                        ) : (
+                        <img alt="fav" src={fav.data} style={{width: "1.5vw", height:"1.5vw"}}/>
+                    )}
+                    </div>
+                    <div className={styles.Description}>{description}</div>
                 </div>
-            </card>
+            </div>
         </div>
     )
 }

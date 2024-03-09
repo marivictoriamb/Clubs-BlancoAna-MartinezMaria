@@ -53,3 +53,4 @@ export function useGame(name){
 
     return {data, isLoading};
 }
+

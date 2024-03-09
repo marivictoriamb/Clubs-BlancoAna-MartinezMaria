@@ -11,7 +11,7 @@ export default function Search(){
     const [name, setName] = useState("");
     const [on, setOn] = useState(false);
 
-    async function handleClick(){
+    function handleClick(){
         setOn(true);
     }
 
@@ -22,7 +22,7 @@ export default function Search(){
                 <div className={styles.searchBar}>
                     <div className={styles.bar}>
                         <img className={styles.Img} alt="loop" src={"../../public/search.png"} style={{width: "22px", height:"22px"}}/>
-                        <input className={styles.inputbar} defaultValue={"Escribe el nombre de algun videojuego"} onChange={(e) => {setName(e.target.value)}} /> 
+                        <input className={styles.inputbar} defaultValue={"Escribe el nombre de algun videojuego"} onChange={(e) => {setOn(false), setName(e.target.value)}} /> 
                     </div>
                     <button className={styles.searchButton} onClick={()=>{handleClick()}}> Buscar </button>
                 </div>
