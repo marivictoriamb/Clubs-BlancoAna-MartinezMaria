@@ -61,7 +61,7 @@ function Register(){
 
   return (
     <div className={styles.All}>
-      <div className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
+      <div id={styles.Img} className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
         <img className={styles.Inicio} alt="Inicio" src="../../public/photo.jpg" style={{height: size.targetHeight }}/>
       </div>
       <div className={styles.Information} ref={size.sourceDivRef}>
@@ -74,7 +74,7 @@ function Register(){
               <div className={styles.NombreInput}><input required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} onChange={(e) => setName(e.target.value)}/></div> 
             </div>
             <div className={styles.Username}> 
-              <p style={{fontSize: "14px"}}>Username</p>
+              <p id={styles.p} style={{fontSize: "14px"}}>Username</p>
               <div className={styles.UsernameInput}><input required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} onChange={(e) => setUsername(e.target.value)}/></div> 
             </div>
             <div className={styles.Correo}> 
@@ -84,7 +84,7 @@ function Register(){
             <div className={styles.Contrasena}>
               <div className={styles.ContrasenaText}>
                 <p id={styles.p} style={{fontSize: "14px"}}>Contraseña</p>
-                <img onClick={() => password.handlePasswordClick(!password.isVisible)} alt="eye" src={password.eye} style={{width: "1.5vw", height:"1.5vw", cursor:"pointer"}}/>
+                <img onClick={() => password.handlePasswordClick(!password.isVisible)} alt="eye" src={password.eye} style={{width: "22px", height:"22px", cursor:"pointer"}}/>
               </div>
               <div className={styles.ContrasenaInput}><input 
                   required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} type= {password.password}

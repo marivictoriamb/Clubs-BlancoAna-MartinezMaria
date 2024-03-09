@@ -65,7 +65,7 @@ function Login(){
             <div className={styles.Contrasena}>
               <div className={styles.ContrasenaText}>
                 <p id={styles.p} style={{fontSize: "14px"}}>Contraseña</p>
-                <img onClick={() => password.handlePasswordClick(!password.isVisible)} alt="eye" src={password.eye} style={{width: "1.5vw", height:"1.6vw", cursor:"pointer"}}/>
+                <img onClick={() => password.handlePasswordClick(!password.isVisible)} alt="eye" src={password.eye} style={{width: "22px", height:"22px", cursor:"pointer"}}/>
               </div>
               <div className={styles.ContrasenaInput}><input 
                   required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} type= {password.password}
@@ -86,7 +86,7 @@ function Login(){
         </form>
         {popUp && <ErrorLogin/>}
       </div>
-      <div className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
+      <div id={styles.Img}className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
         <img className={styles.Inicio} alt="Inicio" src="../../public/photo.jpg" style={{height: size.targetHeight }}/>
       </div>
     </div>
