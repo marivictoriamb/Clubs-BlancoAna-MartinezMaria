@@ -9,9 +9,9 @@ export async function getGames(){
     return games;
 }
 
-export async function getGamesByCategory(category){
+export async function getGamesByName(name){
     const gamesCollection = collection(db, "games");
-    const gamesQuery = query(gamesCollection, where("genero", "==", category)); // Filtro / tambien existe >= 
+    const gamesQuery = query(gamesCollection, where("titulo", "==", name)); // Filtro / tambien existe >= 
     const gamesSnapshot = await getDocs(gamesQuery);
     const games = gamesSnapshot.docs.map((doc) => doc.data()); 
 

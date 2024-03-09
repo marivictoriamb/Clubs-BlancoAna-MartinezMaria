@@ -1,11 +1,10 @@
-import { useState,useEffect } from "react";
-import { useClubs, useGames } from "../controllers/api";
+import { useState } from "react";
+import { useClubs } from "../controllers/api";
 import ClubCard from '../Components/ClubCard.jsx'
+import CardLoader from "../Components/CardLoader.jsx";
 import { getUserData, logOut } from "../controllers/auth.js";
 import { useNavigate } from "react-router-dom";
 import {useUser} from "../hooks/user.js"
-import { Link } from "react-router-dom"
-import { getGameId } from "../controllers/games.js";
 import styles from "../css/LandingAdmin.module.css"
 
 export default function LandingAdmin(){
@@ -56,6 +55,12 @@ export default function LandingAdmin(){
             <div className={styles.Perfil}>
                 <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
             </div>
+            <div className={styles.Perfil}>
+                <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
+            </div>
+            <div className={styles.Search}>
+            <button className={styles.seeSearch} onClick={() => {navigate("/buscador", {replace:true})}}>Buscador</button>
+            </div>
             
         </div>
     );
@@ -85,7 +90,14 @@ export function Card(){
     return(
         <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
             {clubs.isLoading  ? (
-                    <div>Cargando . . .</div>
+                    <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                    </div>
                 ) : (
                     clubs.data.map(({videojuegos, nombre, descripcion}) => (<ClubCard key={nombre} name={nombre} description={descripcion} suscrito={getUserInfo(nombre)}/>
                     ))
