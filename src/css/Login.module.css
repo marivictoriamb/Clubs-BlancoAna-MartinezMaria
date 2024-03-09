@@ -3,6 +3,15 @@
    font-family: 'Poppins',serif;
 }
 
+body{
+  background-image: linear-gradient(to bottom right, #35053f 0% 65%, #5b3263 95% 100%);
+}
+
+#p{
+  text-shadow: 1px 3px 10px #eceaea;
+  color: white;
+}
+
 .All{
   display: flex;
   justify-content: center;
@@ -47,6 +56,7 @@ input{
   padding: 8px;
   width: 28vw;
   height: 0.5vw;
+  color: black;
 }
 
 .ContrasenaText{
@@ -69,20 +79,21 @@ input{
   border: none;
   padding: 1vw;
   border-radius: 40px;
-  border-color: rgb(255, 145, 0);
-  background-color: rgb(255, 145, 0);
+  border-color: #5b3263;
+  background-color: #5b3263;
   font-size: 14px;
   color: white;
 }
 
 .Login:hover{
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+  box-shadow: 0 -1px 0 rgba(218, 216, 216, 0.04), 0 2px 4px rgba(170, 168, 168, 0.425);
 }
 
 .Register, .Forget{
   border: none;
-  background-color: white;
+  background-color:transparent;
   font-size: 12px;
+  color: white;
 }
 
 .Option{
@@ -125,28 +136,10 @@ input{
   background-repeat: no-repeat;
   background-position: 12px 11px;
   
-  &:hover {
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-  }
-  
-  &:active {
-    background-color: #eeeeee;
-  }
-  
-  &:focus {
-    outline: none;
-    box-shadow: 
-      0 -1px 0 rgba(0, 0, 0, .04),
-      0 2px 4px rgba(0, 0, 0, .25),
-      0 0 0 3px #c8dafc;
-  }
-  
-  &:disabled {
-    filter: grayscale(100%);
-    background-color: #ebebeb;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-    cursor: not-allowed;
-  }
+}
+
+.GoogleButton:hover{
+  box-shadow: 0 -1px 0 rgba(126, 123, 123, 0.397), 0 2px 4px rgba(119, 118, 118, 0.425);
 }
 
 .CarrerOption{

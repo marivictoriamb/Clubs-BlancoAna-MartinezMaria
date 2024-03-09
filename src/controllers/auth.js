@@ -55,7 +55,6 @@ export async function loginWithCredentials(email, password){
         const {user} = await signInWithEmailAndPassword(auth, email, password);
         return user;
     } catch (error) {
-        alert(error);
         console.error(error);
         return null;
     }
@@ -68,7 +67,6 @@ export async function registerWithCredentials(name, username, email, password, g
         await createUserData(name, username, email, game)
         return user;
     } catch (error) {
-        alert(error);
         console.error(error);
         return null;
     }
