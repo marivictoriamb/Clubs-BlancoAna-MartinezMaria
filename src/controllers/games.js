@@ -35,4 +35,3 @@ export async function getGameId(id){
 
     return gamesSnapshot.docs[0].ref.path.split("/")[1];
 }
-

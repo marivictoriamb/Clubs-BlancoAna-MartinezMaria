@@ -1,12 +1,23 @@
+import { useState } from 'react';
 import styles from './ClubCard.module.css'
 
-function AgrupationCard({name, gender, description, is}){    
+function ClubCard({name, description, suscrito}){    
     const yes = "./public/yes.png";
-    const no = "./public/no.png";
+    const nou = "./public/no.png";
+    const si = "Suscrito";
+    const no = "No Suscrito";
 
-    function ask(){
-        if (is == true){
+    function ask1(){
+        if (suscrito == true){
             return yes;
+        } else{
+            return nou;
+        }
+    }
+
+    function ask2(){
+        if (suscrito == true){
+            return si;
         } else{
             return no;
         }
@@ -25,11 +36,11 @@ function AgrupationCard({name, gender, description, is}){
                 
                 <div className={styles.menu}>
                     <h2 className={styles.Name}>{name}</h2>
-                    <div className={styles.Gender}>{gender}<img alt="suscrito" src={ask()} style={{width: "1.5vw", height:"1.5vw"}}/></div>
+                    <div className={styles.Gender}>{ask2(   )}<img alt="suscrito" src={ask1()} style={{width: "1.5vw", height:"1.5vw"}}/></div>
                     <desc className={styles.Description}>{description}</desc>
                 </div>
             </card>
         </div>
     )
 }
-export default AgrupationCard;
+export default ClubCard;

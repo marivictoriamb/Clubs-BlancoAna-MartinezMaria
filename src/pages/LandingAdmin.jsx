@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useGames } from "../controllers/api";
+import { useClubs, useGames } from "../controllers/api";
 import ClubCard from '../Components/ClubCard.jsx'
 import { getUserData, logOut } from "../controllers/auth.js";
 import { useNavigate } from "react-router-dom";
@@ -48,11 +48,7 @@ export default function LandingAdmin(){
 
     return (
         <div className={styles.All}> 
-            <Link to="/home"><button className={styles.Close} onClick={() => {handleLogOut()}}>Cerrar Sesion</button></Link>
-            <div className={styles.Create}>
-               <label>{getUserData(user.uid).juego_favorito}</label>
-                <button onClick={handleSubmit}>Enviar</button>
-            </div>
+            <button className={styles.Close} onClick={() => {handleLogOut()}}>Cerrar Sesion</button>
             <div className={styles.Read}>
                 <button className={styles.See} onClick={() => {handleShow()}}>{show}</button>
                 {want && <Card />}
@@ -66,17 +62,16 @@ export default function LandingAdmin(){
 }
 
 export function Card(){
-    const games = useGames();
+    const clubs = useClubs();
     const user = useUser();
 
     async function getUserInfo(titulo){
         const data = await getUserData(user.email);
-        const game = await getGameId(titulo);
         let value = false;
 
         try{
             data.membresias.forEach(club => {
-                if (club == game){
+                if (club == titulo){
                     value = true;
                 }
             });
@@ -89,10 +84,10 @@ export function Card(){
 
     return(
         <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
-            {games.isLoading  ? (
+            {clubs.isLoading  ? (
                     <div>Cargando . . .</div>
                 ) : (
-                    games.data.map(({titulo, genero, descripcion}) => (<ClubCard key={titulo} name={titulo} gender={genero} description={descripcion} is={getUserInfo(titulo)}/>
+                    clubs.data.map(({videojuegos, nombre, descripcion}) => (<ClubCard key={nombre} name={nombre} description={descripcion} suscrito={getUserInfo(nombre)}/>
                     ))
                 )}
         </div>
