@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import styles from './ClubCard.module.css'
 
 function ClubCard({name, description, suscrito}){    
@@ -6,6 +6,7 @@ function ClubCard({name, description, suscrito}){
     const nou = "./public/no.png";
     const si = "Suscrito";
     const no = "No Suscrito";
+    const navigate = useNavigate();
 
     function ask1(){
         if (suscrito == true){
@@ -23,8 +24,12 @@ function ClubCard({name, description, suscrito}){
         }
     }
 
+    const handleClick = () => {
+        navigate(`/landingadmin/${name}`);
+      };
+
     return(
-        <div className={styles.All}>
+        <div className={styles.All}  onClick={handleClick} style={{cursor:"pointer"}}>
             <card className={styles.Card}>
                 <div className={styles.banner}>
                     <div className={styles.Controler}>
