@@ -1,16 +1,18 @@
 import { useState,useEffect } from "react";
-import { createAgrupation } from "../controllers/agrupaciones";
-import { useAgrupations } from "../controllers/api";
-import AgrupationCard from '../Components/AgrupationCard.jsx'
-import { logOut } from "../controllers/auth.js";
+import { useGames } from "../controllers/api";
+import ClubCard from '../Components/ClubCard.jsx'
+import { getUserData, logOut } from "../controllers/auth.js";
 import { useNavigate } from "react-router-dom";
 import {useUser} from "../hooks/user.js"
 import { Link } from "react-router-dom"
-
+import { getGameId } from "../controllers/games.js";
+import styles from "../css/LandingAdmin.module.css"
 
 export default function LandingAdmin(){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [gender, setGender] = useState("");
+    const [id, setId] = useState("");
     const [want, setWant] = useState(false);
     const [show, setShow] = useState("Mostrar Agrupaciones");
 
@@ -31,7 +33,7 @@ export default function LandingAdmin(){
      */
 
     async function handleSubmit(){
-        await createAgrupation({name, description});
+        await createGame(id, name, gender, description);
         alert("Agrupacion Creada");
     }
 
@@ -45,19 +47,18 @@ export default function LandingAdmin(){
     }
 
     return (
-        <div>
-            <Link to="/home"><button className="Close" onClick={() => {handleLogOut()}}>Cerrar Sesion</button></Link>
-            <div className="Create">
-                <label> Nombre:<input value={name} onChange={(e) => setName(e.target.value)}/></label>
-                <label> Descripcion: <input value={description} onChange={(e) => setDescription(e.target.value)}/></label>
+        <div className={styles.All}> 
+            <Link to="/home"><button className={styles.Close} onClick={() => {handleLogOut()}}>Cerrar Sesion</button></Link>
+            <div className={styles.Create}>
+               <label>{getUserData(user.uid).juego_favorito}</label>
                 <button onClick={handleSubmit}>Enviar</button>
             </div>
-            <div className="Read">
-                <button className="See" onClick={() => {handleShow()}}>{show}</button>
+            <div className={styles.Read}>
+                <button className={styles.See} onClick={() => {handleShow()}}>{show}</button>
                 {want && <Card />}
             </div>
-            <div className="Perfil">
-                <button className="SeePerfil" onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
+            <div className={styles.Perfil}>
+                <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
             </div>
             
         </div>
@@ -65,14 +66,33 @@ export default function LandingAdmin(){
 }
 
 export function Card(){
-    const agrupations = useAgrupations();
+    const games = useGames();
+    const user = useUser();
+
+    async function getUserInfo(titulo){
+        const data = await getUserData(user.email);
+        const game = await getGameId(titulo);
+        let value = false;
+
+        try{
+            data.membresias.forEach(club => {
+                if (club == game){
+                    value = true;
+                }
+            });
+        } catch (e){
+            console.error(e);
+        }
+
+        return value;
+    }
 
     return(
-        <div>
-            {agrupations.isLoading  ? (
+        <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
+            {games.isLoading  ? (
                     <div>Cargando . . .</div>
                 ) : (
-                    agrupations.data.map(({name, description}) => (<AgrupationCard key={name} name={name} description={description}/>
+                    games.data.map(({titulo, genero, descripcion}) => (<ClubCard key={titulo} name={titulo} gender={genero} description={descripcion} is={getUserInfo(titulo)}/>
                     ))
                 )}
         </div>

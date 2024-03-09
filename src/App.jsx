@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 function App(){
+    const navigate = useNavigate();
+
     return (
         <div className="Btns">
-            <div className="LoginH"> <Link to="/login">Iniciar Sesion</Link> </div>
+            <button className="LoginH" onClick={() => {navigate("/login")}}> Iniciar Sesion </button>
             
-            <div className="RegisterH"> <Link to="/signup">Registrarse</Link></div>
+            <button className="RegisterH"  onClick={() => {navigate("/signup")}}> Registrarse</button>
         </div>
     )
 } 

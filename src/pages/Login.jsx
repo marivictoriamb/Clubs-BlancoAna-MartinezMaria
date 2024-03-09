@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import '../css/Login.css'
-import Forgotten from '../Components/Forgotten.jsx'
+import styles from '../css/Login.module.css'
 import { useRequiered } from '../hooks/requiered.js'
 import {usePassword} from '../hooks/password.js'
 import { useSizes } from '../hooks/sizes.js'
@@ -13,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 function Login(){
   const submit = useRequiered();
   const password = usePassword();
-  const [popUp, setPopUp] = useState(false);
   const size = useSizes();
 
   const [email, setEmail] = useState("");
@@ -52,45 +50,40 @@ function Login(){
   
 
   return (
-    <div className="All">
-      <div className="Information" ref={size.sourceDivRef}>
-        <div className='Top1'> 
-        <button style={{backgroundColor:"white", border:"none", outline:"none", cursor:"pointer"}} onClick={() => handleBack()}><img className="Logo" alt="Logo" src="../../public/logo.png" style={{marginTop:"2px", width: "25vh", height:"15vh"}}/></button>
+    <div className={styles.All}>
+      <div className={styles.Information} ref={size.sourceDivRef}>
         <p style={{fontSize: "20px", width:"90%", textAlign:'center', fontWeight:"600"}}>Inicio de Sesion</p>
-        </div>
         <form>
-          <div className='Form'>
-            <div className='Correo'> 
+          <div className={styles.Form}>
+            <div className={styles.Correo}> 
               <p style={{fontSize: "14px"}}>Correo</p>
-              <div className='CorreoInput'><input pattern=".*@correo.unimet.edu.ve" required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} onChange={(e) => setEmail(e.target.value)} value={email}/></div> 
+              <div className={styles.CorreoInput}><input pattern=".*@correo.unimet.edu.ve" required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} onChange={(e) => setEmail(e.target.value)} value={email}/></div> 
             </div>
-            <div className='Contrasena'>
-              <div className='ContrasenaText'>
+            <div className={styles.Contrasena}>
+              <div className={styles.ContrasenaText}>
                 <p style={{fontSize: "14px"}}>Contraseña</p>
                 <img onClick={() => password.handlePasswordClick(!password.isVisible)} alt="eye" src={password.eye} style={{width: "1.5vw", height:"1.5vw", cursor:"pointer"}}/>
               </div>
-              <div className='ContrasenaInput'><input 
+              <div className={styles.ContrasenaInput}><input 
                   required = {submit.isSubmit} style={{fontSize: "12px", padding:"10px", paddingLeft:"20px"}} type= {password.password}
                   minLength="6" maxLength="8" onChange={(e) => setPassw(e.target.value)} value={passw}/>
               </div>
-              <button type="button" className='Forget' style={{cursor:"pointer", color:"rgb(87, 86, 86)"}}onClick={() => {submit.handleButtonClick(false); setPopUp(true);}}>Olvidaste tu contraseña?</button>
-              <Forgotten trigger={popUp}width={ (size.targetWidth + size.targetWidth)} height={size.targetHeight} setTrigger={setPopUp}/>
             </div>
-            <div className='Buttons'>
-              <button className='Login' type="button" onClick={() => {submit.handleButtonClick(true), handleLogin()}}> Iniciar Sesion </button>
-              <Link to="/signup"><button className='Register' style={{cursor:"pointer"}}onClick={() => submit.handleButtonClick(false)}>No tienes cuenta? Registrate aqui </button></Link>
+            <div className={styles.Buttons}>
+              <button className={styles.Login} type="button" onClick={() => {submit.handleButtonClick(true), handleLogin()}}> Iniciar Sesion </button>
+              <button className={styles.Register} style={{cursor:"pointer"}}onClick={() => {submit.handleButtonClick(false), navigate("/signup")}}>No tienes cuenta? Registrate aqui </button>
             </div>
-            <div className='Option'>
+            <div className={styles.Option}>
                 <p style={{fontSize: "14px", textAlign:"center"}}>Tambien</p>
             </div>
-            <div className='Google' >
-              <button type="button" className="GoogleButton" onClick={() => {handleGoogleLogin()}}>Inicia Sesion con Google </button>
+            <div className={styles.Google}>
+              <button type="button" className={styles.GoogleButton} onClick={() => {handleGoogleLogin()}}>Inicia Sesion con Google </button>
             </div>
           </div>
         </form>
       </div>
-      <div className="Photo" ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
-        <img className="Inicio" alt="Inicio" src="https://www.unimet.edu.ve/wp-content/uploads/2023/12/FOTOS-CAMPUS-2023-24-1-1024x683.jpg" style={{height: size.targetHeight }}/>
+      <div className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
+        <img className={styles.Inicio} alt="Inicio" src="https://www.unimet.edu.ve/wp-content/uploads/2023/12/FOTOS-CAMPUS-2023-24-1-1024x683.jpg" style={{height: size.targetHeight }}/>
       </div>
     </div>
   )
