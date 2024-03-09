@@ -3,7 +3,7 @@ import { collection, getDocs, query, where, getDoc} from "firebase/firestore"
 
 
 
-export async function getClubs(){
+export async  function getClubs(){
     const clubsCollections = collection(db, "clubs");
     const clubsSnapshot = await getDocs(clubsCollections);
     const clubs = clubsSnapshot.docs.map((doc) => doc.data()); // Data nos dara la informacion, name y description 
