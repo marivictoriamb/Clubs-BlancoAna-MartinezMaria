@@ -4,6 +4,8 @@ import Register from "./pages/Register";
 import App from "./App.jsx"
 import LandingAdmin from "./pages/LandingAdmin.jsx";
 import Profile from "./pages/Profile.jsx";
+import ClubProfile from "./pages/ClubProfile.jsx";
+import Search from "./pages/Search.jsx";
 
 export const router = createBrowserRouter([
     {path: "/login",
@@ -16,4 +18,8 @@ export const router = createBrowserRouter([
      element: <App/>},
      {path: "/profile",
      element: <Profile/>},
+     {path: "/landingadmin/:name",
+     element: <ClubProfile  />},
+     {path: "/buscador",
+     element: <Search  />}
 ]);

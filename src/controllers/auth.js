@@ -55,7 +55,6 @@ export async function loginWithCredentials(email, password){
         const {user} = await signInWithEmailAndPassword(auth, email, password);
         return user;
     } catch (error) {
-        alert(error);
         console.error(error);
         return null;
     }
@@ -68,7 +67,6 @@ export async function registerWithCredentials(name, username, email, password, g
         await createUserData(name, username, email, game)
         return user;
     } catch (error) {
-        alert(error);
         console.error(error);
         return null;
     }
@@ -90,7 +88,6 @@ export async function getUserData(email){
     const userQuery = query(usersCollection, where("email", "==", email));
     const userSnapshot = await getDocs(userQuery);
     const users = userSnapshot.docs.map((doc) => doc.data()); 
-
     return users[0];
 }
 
@@ -102,7 +99,7 @@ export async function getUserId(email){
 }
 
 
-export async function updateUserData(name, username, email, game){
+export async function updateUserData(name, username, email, game, memberships){
     const usersCollection = collection(db, "users");
     const ref = await getUserId(email);
     await updateDoc(doc(usersCollection, ref), {
@@ -110,5 +107,5 @@ export async function updateUserData(name, username, email, game){
         username: username,
         email: email,
         juego_preferido: game,
-        membresias: [],})
+        membresias: memberships,})
 }

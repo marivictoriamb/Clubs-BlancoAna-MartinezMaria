@@ -1,5 +1,5 @@
 import { db } from "../firebase.js"
-import { collection, getDocs, query, where, setDoc, doc} from "firebase/firestore"
+import { collection, getDocs, query, where, doc, getDoc} from "firebase/firestore"
 
 export async function getGames(){
     const gamesCollection = collection(db, "games");
@@ -9,9 +9,9 @@ export async function getGames(){
     return games;
 }
 
-export async function getGamesByCategory(category){
+export async function getGamesByName(name){
     const gamesCollection = collection(db, "games");
-    const gamesQuery = query(gamesCollection, where("genero", "==", category)); // Filtro / tambien existe >= 
+    const gamesQuery = query(gamesCollection, where("titulo", "==", name)); // Filtro / tambien existe >= 
     const gamesSnapshot = await getDocs(gamesQuery);
     const games = gamesSnapshot.docs.map((doc) => doc.data()); 
 
@@ -36,3 +36,9 @@ export async function getGameId(id){
     return gamesSnapshot.docs[0].ref.path.split("/")[1];
 }
 
+export async function getGameById(id){
+    const gameRef = doc(db, "games", id);
+    const gameSnapshot = await getDoc(gameRef);
+
+    return gameSnapshot.data();
+}

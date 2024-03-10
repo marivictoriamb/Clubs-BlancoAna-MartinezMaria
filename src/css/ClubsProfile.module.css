@@ -1,0 +1,35 @@
+.Games{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction:row;
+    gap:2vw;
+    align-items:center; 
+    justify-content:center;
+}
+
+.Right{
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+.position{
+  display: flex;  
+  flex-wrap: wrap;
+  flex-direction:row;
+}
+
+
+.container {
+    display: flex;
+  }
+  
+  .container img {
+    width: 40%;
+    height: 100vh;
+  }
+  
+  .container div {
+    margin-left: 5px; 
+  }
+
+

@@ -1,11 +1,10 @@
-import { useState,useEffect } from "react";
-import { useGames } from "../controllers/api";
+import { useState } from "react";
+import { useClubs } from "../controllers/api";
 import ClubCard from '../Components/ClubCard.jsx'
+import CardLoader from "../Components/CardLoader.jsx";
 import { getUserData, logOut } from "../controllers/auth.js";
 import { useNavigate } from "react-router-dom";
 import {useUser} from "../hooks/user.js"
-import { Link } from "react-router-dom"
-import { getGameId } from "../controllers/games.js";
 import styles from "../css/LandingAdmin.module.css"
 
 export default function LandingAdmin(){
@@ -48,11 +47,7 @@ export default function LandingAdmin(){
 
     return (
         <div className={styles.All}> 
-            <Link to="/home"><button className={styles.Close} onClick={() => {handleLogOut()}}>Cerrar Sesion</button></Link>
-            <div className={styles.Create}>
-               <label>{getUserData(user.uid).juego_favorito}</label>
-                <button onClick={handleSubmit}>Enviar</button>
-            </div>
+            <button className={styles.Close} onClick={() => {handleLogOut()}}>Cerrar Sesion</button>
             <div className={styles.Read}>
                 <button className={styles.See} onClick={() => {handleShow()}}>{show}</button>
                 {want && <Card />}
@@ -60,23 +55,28 @@ export default function LandingAdmin(){
             <div className={styles.Perfil}>
                 <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
             </div>
+            <div className={styles.Perfil}>
+                <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
+            </div>
+            <div className={styles.Search}>
+            <button className={styles.seeSearch} onClick={() => {navigate("/buscador", {replace:true})}}>Buscador</button>
+            </div>
             
         </div>
     );
 }
 
 export function Card(){
-    const games = useGames();
+    const clubs = useClubs();
     const user = useUser();
 
     async function getUserInfo(titulo){
         const data = await getUserData(user.email);
-        const game = await getGameId(titulo);
         let value = false;
 
         try{
             data.membresias.forEach(club => {
-                if (club == game){
+                if (club == titulo){
                     value = true;
                 }
             });
@@ -89,10 +89,17 @@ export function Card(){
 
     return(
         <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
-            {games.isLoading  ? (
-                    <div>Cargando . . .</div>
+            {clubs.isLoading  ? (
+                    <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                        <CardLoader/>
+                    </div>
                 ) : (
-                    games.data.map(({titulo, genero, descripcion}) => (<ClubCard key={titulo} name={titulo} gender={genero} description={descripcion} is={getUserInfo(titulo)}/>
+                    clubs.data.map(({videojuegos, nombre, descripcion}) => (<ClubCard key={nombre} name={nombre} description={descripcion} suscrito={getUserInfo(nombre)}/>
                     ))
                 )}
         </div>

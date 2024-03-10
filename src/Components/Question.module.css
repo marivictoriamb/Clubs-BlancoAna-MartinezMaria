@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 3;
 }
 
 .Tittle{
@@ -21,9 +22,9 @@
 .popupContent{
     position: relative;
     padding: 32px;
-    width: 50%;
-    height: 85vh;
-    background-color: white;
+    width: 50vw;
+    height: 50vh;
+    background-color: rgb(230, 227, 230);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,31 +45,47 @@ input{
 
 .ButtonsP{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     gap:4vh;
   }
 
-.Establish{
-    width: 28vw;
-    margin-top: 2vh;
+.Yes, .No{
+    width: 20vw;
+    margin: 2vh;
+    margin-bottom: 5vw;
     border: none;
     padding: 1vw;
     border-radius: 40px;
-    border-color: rgb(255, 145, 0);
-    background-color: rgb(255, 145, 0);
-    font-size: 2.5vh;
+    border-color: rgb(54, 87, 158);
+    background-color: rgb(54, 87, 158);
+    font-size: 18px;
     color: white;
   }
   
-.Establish:hover{
+.Yes, .No :hover{
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
   }
+
+  .Title{
+    font-size: 30px;
+  }
+
+  .Description{
+    font-size: 18px;
+  }
   
-.LoginP{
-    border: none;
-    background-color: white;
-    font-size: 2vh;
-    color: rgb(158, 158, 158);;
+  @media screen and (max-width: 420px) {
+    .Yes, .No, .Description{
+        font-size: 14px;
+    }
+
+    .Title{
+      font-size: 18px;
+    }
+
+    .popupContent{
+      gap: 2vh;
+    }
   }
