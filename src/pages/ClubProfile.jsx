@@ -51,7 +51,7 @@ export default function ClubProfile() {
     return (
       <div>
         <div className={styles.container}>
-          <img
+          <img className={styles.img}
             style={{ width: "40%", height: "100vh"}}
             alt="GameRoom"
             src={"../public/GameRoom.png"}
@@ -61,8 +61,10 @@ export default function ClubProfile() {
               <div className={styles.position}>
                 <h1 className={styles.Name}>📺 {membership.club[0].nombre} 🕹️</h1>
                 <div className={styles.Text}>
-                  <img className={styles.icon} alt="icon" src="../public/information.png" style={{width:"30px", height:"30px"}}/>
-                  <h4 className={styles.Description}>{membership.club[0].descripcion}</h4>
+                  <div className={styles.info}>
+                    <img className={styles.icon} alt="icon" src="../public/information.png" />
+                    <h4 className={styles.Description}>{membership.club[0].descripcion}</h4>
+                  </div>
                 <button className={styles.Afiliacion} onClick={() => {handleMembership()}}>{membership.show}</button>
                 </div>
               </div>

@@ -18,6 +18,27 @@ export default function LandingAdmin() {
 
   const navigate = useNavigate();
   const user = useUser();
+  const clubs = useClubs();
+  const [values, setValues] = useState([]);
+
+  if (clubs != null && user != null && want == false){
+    if (clubs.isLoading != true && clubs.isCharging != true){
+      getUserInfo()
+    }
+  }
+
+  async function getUserInfo() {
+    const data = await getUserData(user.email);
+    clubs.id.forEach(club => {
+      let value = false;
+      if (data.membresias.includes(club) == true){
+        value = true;
+      }
+      values.push(value)
+    });
+    setWant(true)
+  }
+
 
   function handleLogOut() {
     logOut();
@@ -46,6 +67,7 @@ export default function LandingAdmin() {
     }
   }
 
+
   return (
     <div>
     <Navbar></Navbar>
@@ -53,75 +75,38 @@ export default function LandingAdmin() {
       <div>
         <header className={styles.header}>
         </header>
-    
-        {true && <Card />}
+
+        <div style={{display: "flex", flexWrap: "wrap",flexDirection: "row",gap: "5vw",alignItems: "center",justifyContent: "center",}} >
+          {!want ?  (
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              flexDirection: "row",
+              gap: "5vw",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+          </div>
+        ) : (
+          clubs.data.map(({ videojuegos, nombre, descripcion }, index) => (
+            <ClubCard
+              key={nombre}
+              name={nombre}
+              description={descripcion}
+              suscrito={values[index]}
+            />
+          )))}
+          </div>
       </div>
     </div>
-    </div>
-  );
-}
-
-export function Card() {
-  const clubs = useClubs();
-  const user = useUser();
-
-  async function getUserInfo(titulo) {
-    const data = await getUserData(user.email);
-    let value = false;
-
-    try {
-      data.membresias.forEach((club) => {
-        if (club == titulo) {
-          value = true;
-        }
-      });
-    } catch (e) {
-      console.error(e);
-    }
-
-    return value;
-  }
-
-  return (
-
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        flexDirection: "row",
-        gap: "5vw",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {clubs.isLoading ? (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            flexDirection: "row",
-            gap: "5vw",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <CardLoader />
-          <CardLoader />
-          <CardLoader />
-          <CardLoader />
-          <CardLoader />
-          <CardLoader />
-        </div>
-      ) : (
-        clubs.data.map(({ videojuegos, nombre, descripcion }) => (
-          <ClubCard
-            key={nombre}
-            name={nombre}
-            description={descripcion}
-            suscrito={getUserInfo(nombre)}
-          />
-        ))
-      )}
     </div>
   );
 }

@@ -11,6 +11,14 @@ export async  function getClubs(){
     return clubs;
 }
 
+export async  function getClubsId(){
+    const clubsCollections = collection(db, "clubs");
+    const clubsSnapshot = await getDocs(clubsCollections);
+    const clubs = clubsSnapshot.docs.map((doc) => doc.id); // Data nos dara la informacion, name y description 
+
+    return clubs;
+}
+
 export async function getClub(id){
     const clubsCollections = collection(db, "clubs");
     const clubsQuery = query(clubsCollections, where("nombre", "==", id));
