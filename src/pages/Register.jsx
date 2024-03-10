@@ -64,7 +64,7 @@ function Register(){
       <div id={styles.Img} className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
         <img className={styles.Inicio} alt="Inicio" src="../../public/photo.jpg" style={{height: size.targetHeight }}/>
       </div>
-      <div className={styles.Information} ref={size.sourceDivRef}>
+      <div className={styles.Information}   ref={size.sourceDivRef}>
         {popUp && <ErrorRegister/>}
         <p id={styles.p} style={{fontSize: "30px", width:"90%", textAlign:'center', fontWeight:"600"}}>Registro</p>
         <form>
@@ -104,7 +104,7 @@ function Register(){
                         </select></div> 
             </div>
             <div className={styles.Buttons}>
-              <button className={styles.Login} type="button" onClick={() => {submit.handleButtonClick(true), handleRegister()}}> Craer cuenta </button>
+              <button className={styles.Login} type="button" onClick={() => {submit.handleButtonClick(true), handleRegister()}}> Crear cuenta </button>
               <button className={styles.Register} style={{cursor:"pointer"}}onClick={() => {submit.handleButtonClick(false), navigate("/login")}}>Ya tienes una cuenta? Inicia Sesion </button>
             </div>
             <div className={styles.Option}>
