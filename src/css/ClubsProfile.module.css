@@ -49,8 +49,8 @@
 }
 
 .Right{
-    max-height: 100vh;
-    overflow-y: auto;
+  flex: 1;
+  overflow: auto
 }
 
 .position{
@@ -76,12 +76,15 @@
 
 
 .container {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   }
   
   .container .img {
     width: 40%;
-    height: 100vh;
+    height: 100%;
   }
   
   .container div {

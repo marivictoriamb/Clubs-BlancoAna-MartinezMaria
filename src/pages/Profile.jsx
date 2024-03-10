@@ -10,6 +10,7 @@ import Actualizacion from "../Components/Actualizacion";
 import ClubCard from '../Components/ClubCard.jsx'
 import CardLoader from "../Components/CardLoader.jsx";
 import { getClubById, getClubId } from "../controllers/clubs";
+import Navbar from "../Components/Navbar.jsx";
 
 export default function Profile(){
     const navigate = useNavigate();
@@ -85,6 +86,8 @@ export default function Profile(){
     }
 
     return(
+        <div>
+            <Navbar/>
         <div className={styles.All}>
             <div className={styles.Card}>
                 <div className={styles.banner}>
@@ -148,6 +151,7 @@ export default function Profile(){
                 </div>
             </div>
             <Question trigger={trigger} name={name} username={username} email={email} gameID={gameID} setTrigger={setTrigger} restoreData={ restoreData} setAct={setAct}/>
+        </div>
         </div>
     )
 

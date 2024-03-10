@@ -1,14 +1,12 @@
 import { useParams } from "react-router-dom";
-import { getClub, getClubId } from "../controllers/clubs.js";
-import { getGameById } from "../controllers/games.js";
-import { useState, useEffect } from "react";
+import { getClubId } from "../controllers/clubs.js";
 import GameCard from "../Components/GameCard.jsx";
 import styles from "../css/ClubsProfile.module.css";
-import GameRoomImage from "../../public/GameRoom.jpeg";
 import { getUserData, updateUserData } from "../controllers/auth.js";
 import { useUser } from "../hooks/user";
 import CardLoader from "../Components/CardLoader.jsx";
 import { Membership } from "../controllers/membership.js";
+import Navbar from "../Components/Navbar.jsx";
 
 export default function ClubProfile() {
   const clubName = useParams();
@@ -50,12 +48,14 @@ export default function ClubProfile() {
   if (user != null && membership.show != "..."){
     return (
       <div>
+        <Navbar/>
+      <div>
         <div className={styles.container}>
-          <img className={styles.img}
-            style={{ width: "40%", height: "100vh"}}
+          {/* <img className={styles.img}    Esto no se si dejarlo siento que se ve mejor sin la imagen
+            style={{ width: "40%", height: "100%"}}
             alt="GameRoom"
             src={"../public/GameRoom.png"}
-          />
+          /> */}
           <div className={styles.Right}>
             <div>
               <div className={styles.position}>
@@ -83,6 +83,7 @@ export default function ClubProfile() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     ); 
   } else {

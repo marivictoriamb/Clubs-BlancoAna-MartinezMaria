@@ -1,50 +1,74 @@
 import styled from "styled-components"
 import React, { useState } from 'react';
 import BurguerButton from "./BurgueButton";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
 
   const [clicked, setClicked] = useState(false)
+  const navigate = useNavigate();
+
   const handleClick = () => {
     setClicked(!clicked)
   }
+
+  const handleNavigate = (name) => () => {
+    navigate(name);
+  }
+
   return (
     <Container>
       <NavContainer>
-      <img src="../../public/game3.png" />
+      <img src="../../public/game3.png"  onClick={handleNavigate("/landingadmin")}  className={`imagen`}/>
         <div className={`links ${clicked ? 'active' : ''}`}>
-            <a onClick={handleClick} href="/landingadmin">Home</a>
-            <a onClick={handleClick} href="/profile">Perfil</a>
-            <a onClick={handleClick} href="/buscador">Buscar</a>
+            <img src="./public/search2.png" onClick={handleNavigate("/buscador")} className={`imagen`}  />
+            <img src="./public/user2.png" onClick={handleNavigate("/profile")}  className={`imagen`} />
         </div>
-        <div className='burguer'>
+        <div className={`burguer`}>
           <BurguerButton clicked={clicked} handleClick={handleClick} />
         </div>
         <BgDiv className={`initial ${clicked ? ' active' : ''}`}></BgDiv>
       </NavContainer>
     </Container>
   )
+
 }
+
 
 const Container = styled.div``
 
 const NavContainer = styled.nav`
-  padding: 4rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  a{
+  background: #5b3263;
+
+  .imagen:hover{
+    transform: scale(1.05);
+  }
+
+  .burguer{
+    display: none
+  }
+  
+  @media screen and (max-width: 768px){
+    .burguer{
+      display:inline-block;
+    }
+  }
+  img{
     color: white
     text-decoratore: none;
-    margin-right: 1rem;
+    margin-right:4rem;
   }
   .links{
     position: absolute;
     top: -700px;
     left: -2000px;
     right: 0;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 2rem;
+    margin-right: 2rem;
     text-align: center;
     transition: all .5s ease;
     a{
@@ -70,7 +94,7 @@ const NavContainer = styled.nav`
     margin-left: auto;
     margin-right: auto;
     top: 30%;
-    left: 0;
+    left: 2rem;
     right: 0;
     text-align: center;
     a{
