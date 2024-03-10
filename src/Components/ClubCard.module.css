@@ -29,7 +29,7 @@
 }
  
 .banner{
-    background-image: url("./public/background.jpeg");
+    background-image: url("./public/clubs.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -41,7 +41,7 @@
 }
 
 .bannerG{
-    background-image: url('../public/background.jpeg');
+    background-image: url('../public/back.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

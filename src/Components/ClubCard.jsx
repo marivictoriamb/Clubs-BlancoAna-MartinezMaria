@@ -35,7 +35,7 @@ function ClubCard({name, description, suscrito, button, handle}){
                 <div className={styles.banner}>
                     <div className={styles.Controler} onClick={handleClick} style={{cursor:"pointer"}}>
                         <div className={styles.Image}>
-                            <img style={{width: "20vh", height:"20vh"}} alt="control" src="./public/controller.png" />
+                            <img style={{width: "20vh", height:"20vh", objectFit:"contain", borderRadius:"50%"}} alt="control" src="./public/panda.png" />
                         </div>
                     </div>
                 </div>
