@@ -18,11 +18,11 @@ export default function Search(){
     return(
         <div className={styles.All}>
             <div className={styles.banner}>
-                <h2 className={styles.title}>Encuentra con que videojuegos contamos </h2>
+                <h2 className={styles.title}>Encuentra con que videojuegos contamos 🎮 </h2>
                 <div className={styles.searchBar}>
                     <div className={styles.bar}>
-                        <img className={styles.Img} alt="loop" src={"../../public/search.png"} style={{width: "22px", height:"22px"}}/>
-                        <input className={styles.inputbar} defaultValue={"Escribe el nombre de algun videojuego"} onChange={(e) => {setOn(false), setName(e.target.value)}} /> 
+                        <img className={styles.Img} alt="loop" src={"../../public/search.png"}/>
+                        <input className={styles.inputbar} defaultValue={"Buscador"} onChange={(e) => {setOn(false), setName(e.target.value)}} /> 
                     </div>
                     <button className={styles.searchButton} onClick={()=>{handleClick()}}> Buscar </button>
                 </div>
