@@ -30,7 +30,7 @@ function ClubCard({name, description, suscrito}){
 
     return(
         <div className={styles.All}  onClick={handleClick} style={{cursor:"pointer"}}>
-            <card className={styles.Card}>
+            <div className={styles.Card}>
                 <div className={styles.banner}>
                     <div className={styles.Controler}>
                         <div className={styles.Image}>
@@ -42,9 +42,9 @@ function ClubCard({name, description, suscrito}){
                 <div className={styles.menu}>
                     <h2 className={styles.Name}>{name}</h2>
                     <div className={styles.Gender}>{ask2(   )}<img alt="suscrito" src={ask1()} style={{width: "1.5vw", height:"1.5vw"}}/></div>
-                    <desc className={styles.Description}>{description}</desc>
+                    <div className={styles.Description}>{description}</div>
                 </div>
-            </card>
+            </div>
         </div>
     )
 }

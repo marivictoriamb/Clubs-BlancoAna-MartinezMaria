@@ -1,25 +1,23 @@
 import { useParams } from "react-router-dom";
-import { getClub } from "../controllers/clubs.js";
+import { getClub, getClubId } from "../controllers/clubs.js";
 import { getGameById } from "../controllers/games.js";
 import { useState, useEffect } from "react";
 import GameCard from "../Components/GameCard.jsx";
 import styles from "../css/ClubsProfile.module.css";
 import GameRoomImage from "../../public/GameRoom.jpeg";
-import { getUserData } from "../controllers/auth.js";
+import { getUserData, updateUserData } from "../controllers/auth.js";
 import { useUser } from "../hooks/user";
-import { updateMembershipData } from "../controllers/membership.js";
+import CardLoader from "../Components/CardLoader.jsx";
 
 export default function ClubProfile() {
   const clubName = useParams();
-  const user = useUser(); //usuario dentro del programa
+  const user = useUser(); 
   const [club, setClub] = useState(null);
   const [games, setGames] = useState([]);
-  const [want, setWant] = useState(handleShow());
-  const [show, setShow] = useState("Afiliarse");
-  const array = Membresia();
+  const [want, setWant] = useState(false);
 
   useEffect(() => {
-    const fetchClubData = async () => {
+    async function fetchClubData() {
       const clubData = await getClub(clubName.name);
       setClub(clubData);
 
@@ -29,87 +27,103 @@ export default function ClubProfile() {
         })
       );
       setGames(gamesData);
+
+        if (user != null && club != null){
+          const data = await getUserData(user.email);
+          const clubValue = await getClubId(club[0].nombre);
+          const membershipValue = data.membresias;
+          setWant(membershipValue.includes(clubValue))
+          handleShow()
+        }
     };
 
     fetchClubData();
-  }, [clubName.name]);
+  }, [clubName]);
 
-  if (!club || club.length === 0) {
-    return <div>No se encontró el club</div>;
-  }
 
-  //Actualizar la membresias
-
-  const handleMembership = async () => {
-    if (user != null) {
-      const userData = await getUserData(user.email); //Informacion de la db
-      const valueToRemove = club[0].id;
-      const newArray = userData.membresias.filter(
-        (item) => item !== valueToRemove
-      );
-      {
-        !want
-          ? userData.membresias.concat(club[0].id)
-          : (userData.membresias = newArray);
-      }
-      updateMembershipData(
+  async function handleMembership(){
+    const userData = await getUserData(user.email); 
+    const clubValue = await getClubId(club[0].nombre);
+    const membershipValue = userData.membresias
+    
+    if (want != true){
+      membershipValue.push(clubValue);
+      await updateUserData(
         userData.nombre,
-        user.username,
-        user.email,
-        user.game,
-        userData.membresias
+        userData.username,
+        userData.email,
+        userData.juego_preferido,
+        membershipValue
       );
-      handleShow();
+    } else {
+      const membershipValue = userData.membresias.filter((item) => item !== clubValue );
+      await updateUserData(
+        userData.nombre,
+        userData.username,
+        userData.email,
+        userData.juego_preferido,
+        membershipValue
+      );
     }
+
+    setWant(!want);
+    handleShow()
   };
 
-  async function handleShow() {
-    if (user != null) {
-      const userData = await getUserData(user.email); //Informacion de la db
-      setWant(findId(userData.membresias, club[0].id));
-      if (want) {
-        setShow("Afiliarse");
-      } else {
-        setShow("Desafiliarse");
-      }
+  function handleShow() {
+    if (want == true){
+      return("Desafiliarse");
+    } else {
+      return("Afiliarse");
     }
 
   }
 
-  function findId(array, value) {
-    return array.indexOf(value) === -1;
-  }
 
-  return (
-    <div>
-      <div className={styles.container}>
-        <img
-          style={{ width: "40%", height: "100vh" }}
-          alt="GameRoom"
-          src={GameRoomImage}
-        />
-        <div className={styles.Right}>
-          <div>
-            <div className={styles.position}>
-              <h1>{club[0].nombre}</h1>
-              <button onClick={handleMembership}>{show}</button>
+  if (user != null && club != null){
+    return (
+      <div>
+        <div className={styles.container}>
+          <img
+            style={{ width: "40%", height: "100vh" }}
+            alt="GameRoom"
+            src={GameRoomImage}
+          />
+          <div className={styles.Right}>
+            <div>
+              <div className={styles.position}>
+                <h1>{club[0].nombre}</h1>
+                <button onClick={() => {handleMembership()}}>{handleShow()}</button>
+              </div>
+              <h4>Descripción: {club[0].descripcion}</h4>
             </div>
-            <h4>Descripción: {club[0].descripcion}</h4>
-          </div>
-          <div>
-            <div className={styles.Games}>
-              {games.map((game) => (
-                <GameCard
-                  key={game.titulo}
-                  name={game.titulo}
-                  gender={game.genero}
-                  description={game.descripcion}
-                />
-              ))}
+            <div>
+              <div className={styles.Games}>
+                {games.map((game) => (
+                  <GameCard
+                    key={game.titulo}
+                    name={game.titulo}
+                    gender={game.genero}
+                    description={game.descripcion}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    ); 
+  } else {
+    return (
+      <div style={{margin:"30px", display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
+        <CardLoader/>
+        <CardLoader/>
+        <CardLoader/>
+        <CardLoader/>
+        <CardLoader/>
+        <CardLoader/>
+      </div>
+    );
+  }
+  
 }

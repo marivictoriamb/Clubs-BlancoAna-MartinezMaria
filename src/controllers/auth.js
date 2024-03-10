@@ -99,7 +99,7 @@ export async function getUserId(email){
 }
 
 
-export async function updateUserData(name, username, email, game){
+export async function updateUserData(name, username, email, game, memberships){
     const usersCollection = collection(db, "users");
     const ref = await getUserId(email);
     await updateDoc(doc(usersCollection, ref), {
@@ -107,5 +107,5 @@ export async function updateUserData(name, username, email, game){
         username: username,
         email: email,
         juego_preferido: game,
-        membresias: [],})
+        membresias: memberships,})
 }
