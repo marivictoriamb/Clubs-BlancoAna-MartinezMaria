@@ -29,3 +29,15 @@ button{
 }
 
 
+
+.Option{
+  margin-top: 4vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: center;
+  column-gap: 1.6rem;
+  font-size: 20px;
+  text-align:center;
+  color:rgb(94, 91, 91);
+}

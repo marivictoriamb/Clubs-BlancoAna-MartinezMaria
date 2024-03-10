@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/user.js";
 import styles from "../css/LandingAdmin.module.css";
 import Navbar from "../Components/Navbar.jsx";
+import { Carrusel } from "../Components/Carrusel.jsx";
 
 export default function LandingAdmin() {
   const [name, setName] = useState("");
@@ -75,6 +76,12 @@ export default function LandingAdmin() {
       <div>
         <header className={styles.header}>
         </header>
+
+        <Carrusel/>
+
+        <div className={styles.Option}>
+          <label id={styles.p} >Clubs</label>
+        </div>
 
         <div style={{display: "flex", flexWrap: "wrap",flexDirection: "row",gap: "5vw",alignItems: "center",justifyContent: "center",}} >
           {!want ?  (
