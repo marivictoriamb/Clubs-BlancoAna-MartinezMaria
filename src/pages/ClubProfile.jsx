@@ -8,98 +8,68 @@ import GameRoomImage from "../../public/GameRoom.jpeg";
 import { getUserData, updateUserData } from "../controllers/auth.js";
 import { useUser } from "../hooks/user";
 import CardLoader from "../Components/CardLoader.jsx";
+import { Membership } from "../controllers/membership.js";
 
 export default function ClubProfile() {
   const clubName = useParams();
   const user = useUser(); 
-  const [club, setClub] = useState(null);
-  const [games, setGames] = useState([]);
-  const [want, setWant] = useState(false);
-
-  useEffect(() => {
-    async function fetchClubData() {
-      const clubData = await getClub(clubName.name);
-      setClub(clubData);
-
-      const gamesData = await Promise.all(
-        clubData[0].videojuegos.map(async (item) => {
-          return await getGameById(item);
-        })
-      );
-      setGames(gamesData);
-
-        if (user != null && club != null){
-          const data = await getUserData(user.email);
-          const clubValue = await getClubId(club[0].nombre);
-          const membershipValue = data.membresias;
-          setWant(membershipValue.includes(clubValue))
-          handleShow()
-        }
-    };
-
-    fetchClubData();
-  }, [clubName]);
+  const membership = Membership(clubName);
 
 
   async function handleMembership(){
-    const userData = await getUserData(user.email); 
-    const clubValue = await getClubId(club[0].nombre);
-    const membershipValue = userData.membresias
-    
-    if (want != true){
-      membershipValue.push(clubValue);
-      await updateUserData(
-        userData.nombre,
-        userData.username,
-        userData.email,
-        userData.juego_preferido,
-        membershipValue
-      );
-    } else {
-      const membershipValue = userData.membresias.filter((item) => item !== clubValue );
-      await updateUserData(
-        userData.nombre,
-        userData.username,
-        userData.email,
-        userData.juego_preferido,
-        membershipValue
-      );
+    if (membership.show != "..."){
+      const userData = await getUserData(user.email); 
+      const clubValue = await getClubId(membership.club[0].nombre);
+      const membershipValue = userData.membresias
+      
+      if (membership.want != true){
+        membershipValue.push(clubValue);
+        await updateUserData(
+          userData.nombre,
+          userData.username,
+          userData.email,
+          userData.juego_preferido,
+          membershipValue
+        );
+      } else {
+        const membershipValue = userData.membresias.filter((item) => item !== clubValue );
+        await updateUserData(
+          userData.nombre,
+          userData.username,
+          userData.email,
+          userData.juego_preferido,
+          membershipValue
+        );
+      }
+  
+      membership.setWant(!membership.want);
     }
-
-    setWant(!want);
-    handleShow()
   };
 
-  function handleShow() {
-    if (want == true){
-      return("Desafiliarse");
-    } else {
-      return("Afiliarse");
-    }
 
-  }
-
-
-  if (user != null && club != null){
+  if (user != null && membership.show != "..."){
     return (
       <div>
         <div className={styles.container}>
           <img
-            style={{ width: "40%", height: "100vh" }}
+            style={{ width: "40%", height: "100vh"}}
             alt="GameRoom"
-            src={GameRoomImage}
+            src={"../public/GameRoom.png"}
           />
           <div className={styles.Right}>
             <div>
               <div className={styles.position}>
-                <h1>{club[0].nombre}</h1>
-                <button onClick={() => {handleMembership()}}>{handleShow()}</button>
+                <h1 className={styles.Name}>📺 {membership.club[0].nombre} 🕹️</h1>
+                <div className={styles.Text}>
+                  <img className={styles.icon} alt="icon" src="../public/information.png" style={{width:"30px", height:"30px"}}/>
+                  <h4 className={styles.Description}>{membership.club[0].descripcion}</h4>
+                <button className={styles.Afiliacion} onClick={() => {handleMembership()}}>{membership.show}</button>
+                </div>
               </div>
-              <h4>Descripción: {club[0].descripcion}</h4>
             </div>
             <div>
               <div className={styles.Games}>
-                {games.map((game) => (
+                {membership.games.map((game) => (
                   <GameCard
                     key={game.titulo}
                     name={game.titulo}

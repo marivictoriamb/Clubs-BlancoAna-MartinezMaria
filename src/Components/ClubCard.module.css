@@ -19,11 +19,11 @@
 .Card{
     background-color: white;
     max-width: 360px;
-    max-height: 450px;
-    min-height: 450px;
+    max-height: 500px;
+    min-height: 500px;
     display: flex;
-    flex-direction: column;
     overflow: hidden;
+    flex-direction: column;
     border-radius: 2rem;
     box-shadow: 0px 1rem 1.5rem rgba(black, 0.5);
 }
@@ -40,6 +40,21 @@
     box-sizing: border-box;
 }
 
+.bannerG{
+    background-image: url('../public/background.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 11rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+    right: 10px;
+    width: 380px;
+}
+
 .Controler{
     background-color: white;
     box-shadow: 0 0.5rem 1rem rgba(black, 0.3);
@@ -53,9 +68,7 @@
     padding-top: 10vh;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     flex-direction: column;
-    position: relative;
     box-sizing: border-box;
 }
     
@@ -78,8 +91,7 @@
 
 .Description{
     text-align: justify;
-    padding: 0 2rem 2.5rem;
-    order: 100;
+    padding: 0 2rem 1.5rem;
 }
     
 
@@ -88,3 +100,27 @@
     transform: scale(1.05);
 }
 
+.Des{
+    color: white;
+    border: none;
+    padding: 1vw 2vw;
+    border-radius: 30px;
+    border-color: #5b3263;
+    background-color: #5b3263;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 370px) {
+    .Card{
+        max-height: 600px;
+        min-height: 600px;
+    }
+  }
+
+  @media screen and (max-width: 240px) {
+    .Card{
+        max-height: 700px;
+        min-height: 700px;
+    }
+  }

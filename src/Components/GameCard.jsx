@@ -11,10 +11,10 @@ function GameCard({name, gender, description}){
     return(
         <div className={styles.All}>
             <div className={styles.Card}>
-                <div className={styles.banner}>
+                <div className={styles.bannerG}>
                     <div className={styles.Controler}>
                         <div className={styles.Image}>
-                            <img style={{width: "20vh", height:"20vh"}} alt="control" src="./public/controller.png" />
+                            <img style={{width: "20vh", height:"20vh"}} alt="control" src="../public/controller.png" />
                         </div>
                     </div>
                 </div>
@@ -23,9 +23,9 @@ function GameCard({name, gender, description}){
                     <h2 className={styles.Name}>{name}</h2>
                     <div className={styles.Gender}>{gender}
                     {fav.isLoading  ? (
-                        <img alt="fav" src="./public/console.png" style={{width: "1.5vw", height:"1.5vw"}}/>
+                        <img alt="fav" src="../public/console.png" style={{width: "30px", height:"30px"}}/>
                         ) : (
-                        <img alt="fav" src={fav.data} style={{width: "1.5vw", height:"1.5vw"}}/>
+                        <img alt="fav" src={fav.data} style={{width: "30px", height:"30px"}}/>
                     )}
                     </div>
                     <div className={styles.Description}>{description}</div>

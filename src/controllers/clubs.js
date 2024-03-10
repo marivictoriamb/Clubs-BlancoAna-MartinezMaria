@@ -1,5 +1,5 @@
 import { db } from "../firebase.js"
-import { collection, getDocs, query, where, getDoc} from "firebase/firestore"
+import { collection, getDocs, query, where, getDoc, doc} from "firebase/firestore"
 
 
 
