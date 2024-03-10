@@ -70,20 +70,15 @@ export default function LandingAdmin() {
 
 
   return (
-    <div>
-    <Navbar></Navbar>
     <div className={styles.All}>
-      <div>
-        <header className={styles.header}>
-        </header>
-
+      <Navbar></Navbar>
+      <div className={styles.Info}>
         <Carrusel/>
-
         <div className={styles.Option}>
           <label id={styles.p} >Clubs</label>
         </div>
 
-        <div style={{display: "flex", flexWrap: "wrap",flexDirection: "row",gap: "5vw",alignItems: "center",justifyContent: "center",}} >
+        <div style={{display: "flex", flexWrap: "wrap",flexDirection: "row",gap: "5vw",alignItems: "center",justifyContent: "center"}} >
           {!want ?  (
           <div
             style={{
@@ -113,7 +108,6 @@ export default function LandingAdmin() {
           )))}
           </div>
       </div>
-    </div>
     </div>
   );
 }
