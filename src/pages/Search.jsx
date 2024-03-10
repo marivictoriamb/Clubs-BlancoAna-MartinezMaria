@@ -4,6 +4,7 @@ import styles from "../css/Search.module.css"
 import { useState } from "react";
 import CardLoader from "../Components/CardLoader.jsx";
 import GameCard from '../Components/GameCard.jsx'
+import Navbar from "../Components/Navbar.jsx";
 
 
 export default function Search(){
@@ -16,6 +17,8 @@ export default function Search(){
     }
 
     return(
+        <div>
+            <Navbar/>
         <div className={styles.All}>
             <div className={styles.banner}>
                 <h2 className={styles.title}>Encuentra con que videojuegos contamos 🎮 </h2>
@@ -31,6 +34,7 @@ export default function Search(){
             <div className={styles.results}>
                 {on && <Game name={name}/>}
             </div>
+        </div>
         </div>
     )
 
@@ -57,3 +61,4 @@ export function Game({name}){
     )
 
 }
+

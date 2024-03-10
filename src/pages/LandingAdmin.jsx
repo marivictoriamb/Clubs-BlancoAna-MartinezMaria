@@ -1,29 +1,52 @@
 import { useState } from "react";
 import { useClubs } from "../controllers/api";
-import ClubCard from '../Components/ClubCard.jsx'
+import ClubCard from "../Components/ClubCard.jsx";
 import CardLoader from "../Components/CardLoader.jsx";
 import { getUserData, logOut } from "../controllers/auth.js";
 import { useNavigate } from "react-router-dom";
-import {useUser} from "../hooks/user.js"
-import styles from "../css/LandingAdmin.module.css"
+import { useUser } from "../hooks/user.js";
+import styles from "../css/LandingAdmin.module.css";
+import Navbar from "../Components/Navbar.jsx";
+import { Carrusel } from "../Components/Carrusel.jsx";
 
-export default function LandingAdmin(){
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [gender, setGender] = useState("");
-    const [id, setId] = useState("");
-    const [want, setWant] = useState(false);
-    const [show, setShow] = useState("Mostrar Agrupaciones");
+export default function LandingAdmin() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [gender, setGender] = useState("");
+  const [id, setId] = useState("");
+  const [want, setWant] = useState(false);
+  const [show, setShow] = useState("Mostrar Agrupaciones");
 
-    const navigate = useNavigate();
-    const user = useUser();
+  const navigate = useNavigate();
+  const user = useUser();
+  const clubs = useClubs();
+  const [values, setValues] = useState([]);
 
-    function handleLogOut(){
-        logOut();
-        navigate("/home", {replace: true});
+  if (clubs != null && user != null && want == false){
+    if (clubs.isLoading != true && clubs.isCharging != true){
+      getUserInfo()
     }
+  }
 
-    /**
+  async function getUserInfo() {
+    const data = await getUserData(user.email);
+    clubs.id.forEach(club => {
+      let value = false;
+      if (data.membresias.includes(club) == true){
+        value = true;
+      }
+      values.push(value)
+    });
+    setWant(true)
+  }
+
+
+  function handleLogOut() {
+    logOut();
+    navigate("/home", { replace: true });
+  }
+
+  /**
   useEffect(() => {
     if (user == null){
       navigate("/home", {replace: true});
@@ -31,77 +54,60 @@ export default function LandingAdmin(){
     }, [user, navigate]);
      */
 
-    async function handleSubmit(){
-        await createGame(id, name, gender, description);
-        alert("Agrupacion Creada");
-    }
+  async function handleSubmit() {
+    await createGame(id, name, gender, description);
+    alert("Agrupacion Creada");
+  }
 
-    function handleShow(){
-        setWant(!want);
-        if (want){
-            setShow("Mostrar Agrupaciones");
-        } else {
-            setShow("Dejar de Mostrar");
-        }
+  function handleShow() {
+    setWant(!want);
+    if (want) {
+      setShow("Mostrar Agrupaciones");
+    } else {
+      setShow("Dejar de Mostrar");
     }
+  }
 
-    return (
-        <div className={styles.All}> 
-            <button className={styles.Close} onClick={() => {handleLogOut()}}>Cerrar Sesion</button>
-            <div className={styles.Read}>
-                <button className={styles.See} onClick={() => {handleShow()}}>{show}</button>
-                {want && <Card />}
-            </div>
-            <div className={styles.Perfil}>
-                <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
-            </div>
-            <div className={styles.Perfil}>
-                <button className={styles.SeePerfil} onClick={() => {navigate("/profile", {replace:true})}}>Ver Perfil</button>
-            </div>
-            <div className={styles.Search}>
-            <button className={styles.seeSearch} onClick={() => {navigate("/buscador", {replace:true})}}>Buscador</button>
-            </div>
-            
+
+  return (
+    <div className={styles.All}>
+      <Navbar></Navbar>
+      <div className={styles.Info}>
+        <Carrusel/>
+        <div className={styles.Option}>
+          <label id={styles.p} >Clubs</label>
         </div>
-    );
-}
 
-export function Card(){
-    const clubs = useClubs();
-    const user = useUser();
-
-    async function getUserInfo(titulo){
-        const data = await getUserData(user.email);
-        let value = false;
-
-        try{
-            data.membresias.forEach(club => {
-                if (club == titulo){
-                    value = true;
-                }
-            });
-        } catch (e){
-            console.error(e);
-        }
-
-        return value;
-    }
-
-    return(
-        <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
-            {clubs.isLoading  ? (
-                    <div style={{display:"flex", flexWrap:"wrap", flexDirection:"row", gap:"5vw", alignItems:"center", justifyContent:"center"}}>
-                        <CardLoader/>
-                        <CardLoader/>
-                        <CardLoader/>
-                        <CardLoader/>
-                        <CardLoader/>
-                        <CardLoader/>
-                    </div>
-                ) : (
-                    clubs.data.map(({videojuegos, nombre, descripcion}) => (<ClubCard key={nombre} name={nombre} description={descripcion} suscrito={getUserInfo(nombre)}/>
-                    ))
-                )}
-        </div>
-    )
+        <div style={{display: "flex", flexWrap: "wrap",flexDirection: "row",gap: "5vw",alignItems: "center",justifyContent: "center"}} >
+          {!want ?  (
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              flexDirection: "row",
+              gap: "5vw",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+            <CardLoader />
+          </div>
+        ) : (
+          clubs.data.map(({ videojuegos, nombre, descripcion }, index) => (
+            <ClubCard
+              key={nombre}
+              name={nombre}
+              description={descripcion}
+              suscrito={values[index]}
+            />
+          )))}
+          </div>
+      </div>
+    </div>
+  );
 }

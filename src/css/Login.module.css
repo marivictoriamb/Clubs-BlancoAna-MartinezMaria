@@ -20,11 +20,15 @@ body{
   height: 100%;
 }
 
+.Right{
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
 .Photo, .Information{
   width: 50%;
   min-height: 100vh;
 }
-
 
 .Inicio{
   width: 100%;

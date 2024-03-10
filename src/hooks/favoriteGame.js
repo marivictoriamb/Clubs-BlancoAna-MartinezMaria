@@ -13,9 +13,9 @@ export function favoriteGame(name){
             const id = await getGameId(name);
             const question = await getUserData(user.email);
             if (question.juego_preferido == id){
-                setData("./public/star.png");
+                setData("../public/star.png");
             } else{
-                setData("./public/console.png");
+                setData("../public/console.png");
             }
         }
 
