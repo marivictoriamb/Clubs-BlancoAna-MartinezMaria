@@ -1,10 +1,16 @@
 import { db } from "../firebase.js"
-import { collection, getDocs, query, where, getDoc} from "firebase/firestore"
+import {doc, collection, updateDoc } from "firebase/firestore";
+import { getUserId } from "./auth.js";
+import { useEffect, useState } from "react";
+import { getUserData } from "../controllers/auth";
 
-export async function getMembership(name){
-    const usersCollections = collection(db, "users");
-    const usersQuery = query(usersCollections, where("nombre", "==", name));
-    const usersSnapshot = await getDocs(usersQuery);
-    const users = usersSnapshot.docs.map((user) => user.data()); 
-    return users;
+export async function updateMembershipData(name, username, email, game, membership){
+    const usersCollection = collection(db, "users");
+    const ref = await getUserId(email);
+    await updateDoc(doc(usersCollection, ref), {
+        nombre: name,
+        username: username,
+        email: email,
+        juego_preferido: game,
+        membresias: membership,})
 }
