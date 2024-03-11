@@ -3,16 +3,16 @@ import { useState } from "react";
 export function usePassword(){
     const [isVisible, setIsVisible] = useState(false);
     const [password, setPassword] = useState("password");
-    const [eye, setEye] = useState("../public/eye-close.png");
+    const [eye, setEye] = useState("../eye-close.png");
 
     function handlePasswordClick (isVisible) {
         if (isVisible){
           setPassword("text");
-          setEye("../public/eye-open.png");
+          setEye("../eye-open.png");
           setIsVisible(isVisible);
         } else {
           setPassword("password");
-          setEye("../public/eye-close.png");
+          setEye("../eye-close.png");
           setIsVisible(isVisible);
         }
       };
