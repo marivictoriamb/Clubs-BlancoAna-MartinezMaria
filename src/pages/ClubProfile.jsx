@@ -107,7 +107,7 @@ export default function ClubProfile() {
         <img className={styles.img}
           style={{ width: "40%", height: "100vh"}}
           alt="GameRoom"
-          src={"../public/GameRoom.png"}
+          src={"../GameRoom.png"}
         />
         <div className={styles.Right}>
           <Navbar/>
@@ -116,7 +116,7 @@ export default function ClubProfile() {
               <h1 className={styles.Name}>📺 {club[0].nombre} 🕹️</h1>
               <div className={styles.Text}>
                 <div className={styles.info}>
-                  <img className={styles.icon} alt="icon" src="../public/information.png" />
+                  <img className={styles.icon} alt="icon" src="../information.png" />
                   <h4 className={styles.Description}>{club[0].descripcion}</h4>
                 </div>
               <button className={styles.Afiliacion} onClick={() => {handleMembership()}}>{show}</button>
