@@ -87,7 +87,7 @@ function Login(){
         {popUp && <ErrorLogin/>}
       </div>
       <div id={styles.Img}className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
-        <img className={styles.Inicio} alt="Inicio" src="../../public/photo.jpg" style={{height: size.targetHeight }}/>
+        <img className={styles.Inicio} alt="Inicio" src="../../photo.jpg" style={{height: size.targetHeight }}/>
       </div>
     </div>
   )
