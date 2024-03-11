@@ -25,6 +25,7 @@ export default function Profile(){
     const [gameID, setGameID] = useState("");
     const [email, setEmail] = useState("...");
     const [membresias, setMembresias] = useState([]);
+    const [memberships, setMemberships] = useState([]);
     const [done, setDone] = useState(false);
 
     const [trigger, setTrigger] = useState(false);
@@ -38,6 +39,7 @@ export default function Profile(){
         setHUser(data.username);
         setGameID(data.juego_preferido);
         setEmail(data.email);
+        setMemberships(data.membresias);
         const value = await getGameById(data.juego_preferido);
         setGame(value.titulo);
 
@@ -149,7 +151,7 @@ export default function Profile(){
                     </div>
                 </div>
             </div>
-            <Question trigger={trigger} name={name} username={username} email={email} gameID={gameID} membresias={membresias} setTrigger={setTrigger} restoreData={ restoreData} setAct={setAct}/>
+            <Question trigger={trigger} name={name} username={username} email={email} gameID={gameID} membresias={memberships} setTrigger={setTrigger} restoreData={ restoreData} setAct={setAct}/>
         </div>
     )
 

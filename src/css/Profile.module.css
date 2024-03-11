@@ -10,7 +10,7 @@
 }
  
 .banner{
-    background-image: url("./profile.png");
+    background-image: url("../profile.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
