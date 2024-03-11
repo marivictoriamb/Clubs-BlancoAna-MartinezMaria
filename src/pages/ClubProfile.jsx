@@ -7,12 +7,9 @@ import { getGameById } from "../controllers/games.js";
 import { useState, useEffect } from "react";
 import GameCard from "../Components/GameCard.jsx";
 import styles from "../css/ClubsProfile.module.css";
-import GameRoomImage from "../../public/GameRoom.jpeg";
-import GameRoomImage from "../../public/GameRoom.jpeg";
 import { getUserData, updateUserData } from "../controllers/auth.js";
 import { useUser } from "../hooks/user";
 import CardLoader from "../Components/CardLoader.jsx";
-import { Membership } from "../controllers/membership.js";
 import Navbar from "../Components/Navbar.jsx";
 
 export default function ClubProfile() {
