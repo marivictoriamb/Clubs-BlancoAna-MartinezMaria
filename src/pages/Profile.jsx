@@ -93,7 +93,7 @@ export default function Profile(){
                     {act && <Actualizacion/>}
                     <div className={styles.Controler}>
                         <div>
-                            <img className={styles.Image} alt="control" src="./public/user.png" />
+                            <img className={styles.Image} alt="control" src="./user.png" />
                         </div>
                     </div>
                 </div>

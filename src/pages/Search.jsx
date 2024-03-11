@@ -24,7 +24,7 @@ export default function Search(){
                 <h2 className={styles.title}>Encuentra con que videojuegos contamos 🎮 </h2>
                 <div className={styles.searchBar}>
                     <div className={styles.bar}>
-                        <img className={styles.Img} alt="loop" src={"../../public/search.png"}/>
+                        <img className={styles.Img} alt="loop" src={"../../search.png"}/>
                         <input className={styles.inputbar} defaultValue={"Buscador"} onChange={(e) => {setOn(false), setName(e.target.value)}} /> 
                     </div>
                     <button className={styles.searchButton} onClick={()=>{handleClick()}}> Buscar </button>

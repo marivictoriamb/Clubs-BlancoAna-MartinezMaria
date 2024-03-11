@@ -13,7 +13,7 @@ function Question(props) {
     return (props.trigger) ? (
         <div className={styles.popup} style={{ width: props.targetWidth, height: props.targetHeight }}>
             <div className={styles.popupContent}>
-                <img className={styles.Logo} alt="Logo" src="../../public/question.png" style={{width: "20vh", height:"20vh"}}/>
+                <img className={styles.Logo} alt="Logo" src="../../question.png" style={{width: "20vh", height:"20vh"}}/>
                 <div className={styles.Tittle}>
                     <h1 className={styles.Title} >Alerta</h1>
                     <p className={styles.Description}> Esta seguro que desea hacer dichos cambios?</p>
