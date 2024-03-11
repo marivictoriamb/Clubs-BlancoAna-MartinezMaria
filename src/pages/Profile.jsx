@@ -86,9 +86,8 @@ export default function Profile(){
     }
 
     return(
-        <div>
-            <Navbar/>
         <div className={styles.All}>
+            <Navbar/>
             <div className={styles.Card}>
                 <div className={styles.banner}>
                     {act && <Actualizacion/>}
@@ -150,8 +149,7 @@ export default function Profile(){
                     </div>
                 </div>
             </div>
-            <Question trigger={trigger} name={name} username={username} email={email} gameID={gameID} setTrigger={setTrigger} restoreData={ restoreData} setAct={setAct}/>
-        </div>
+            <Question trigger={trigger} name={name} username={username} email={email} gameID={gameID} membresias={membresias} setTrigger={setTrigger} restoreData={ restoreData} setAct={setAct}/>
         </div>
     )
 
