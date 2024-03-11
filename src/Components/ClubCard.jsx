@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import styles from './ClubCard.module.css'
 
 function ClubCard({name, description, suscrito, button, handle}){    
-    const yes = "./yes.png";
-    const nou = "./no.png";
+    const yes = "/yes.png";
+    const nou = "/no.png";
     const si = "Suscrito";
     const no = "No Suscrito";
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ function ClubCard({name, description, suscrito, button, handle}){
                 <div className={styles.banner}>
                     <div className={styles.Controler} onClick={handleClick} style={{cursor:"pointer"}}>
                         <div className={styles.Image}>
-                            <img style={{width: "20vh", height:"20vh", objectFit:"contain", borderRadius:"50%"}} alt="control" src="./panda.png" />
+                            <img style={{width: "20vh", height:"20vh", objectFit:"contain", borderRadius:"50%"}} alt="control" src="/panda.png" />
                         </div>
                     </div>
                 </div>

@@ -64,15 +64,15 @@ export function Carrusel(){
         />
 
         <div className={styles.Img} id={styles.first} ref={firstElementRef}>
-          <img alt="carousel" src="../1.png" className={styles.img} />
+          <img alt="carousel" src="/1.png" className={styles.img} />
         </div>
 
         <div className={styles.Img} >
-          <img alt="carousel" src="../2.png" className={styles.img} />
+          <img alt="carousel" src="/2.png" className={styles.img} />
         </div>
 
         <div className={styles.Img} >
-          <img alt="carousel" src="../3.png" className={styles.img} />
+          <img alt="carousel" src="/3.png" className={styles.img} />
         </div>
 
         <div className={styles.navAuto}>
