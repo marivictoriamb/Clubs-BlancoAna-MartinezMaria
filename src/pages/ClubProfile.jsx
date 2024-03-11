@@ -2,8 +2,12 @@ import { useParams } from "react-router-dom";
 import { getClub, getClubId } from "../controllers/clubs.js";
 import { getGameById } from "../controllers/games.js";
 import { useState, useEffect } from "react";
+import { getClub, getClubId } from "../controllers/clubs.js";
+import { getGameById } from "../controllers/games.js";
+import { useState, useEffect } from "react";
 import GameCard from "../Components/GameCard.jsx";
 import styles from "../css/ClubsProfile.module.css";
+import GameRoomImage from "../../public/GameRoom.jpeg";
 import GameRoomImage from "../../public/GameRoom.jpeg";
 import { getUserData, updateUserData } from "../controllers/auth.js";
 import { useUser } from "../hooks/user";
@@ -20,10 +24,12 @@ export default function ClubProfile() {
    const [games, setGames] = useState([]);
    const [show, setShow] = useState("...");
   const [want, setWant] = useState(false);
+ 
 
   async function handleMembership(){
     if (show != "..."){
       setDone(false);
+
       const userData = await getUserData(user.email); 
       const clubValue = await getClubId(club[0].nombre);
       const membershipValue = userData.membresias
@@ -36,6 +42,7 @@ export default function ClubProfile() {
           userData.juego_preferido,
           membershipValue
         );
+        setShow("Desafiliarse");
         setShow("Desafiliarse");
       } else {
         const membershipValue = userData.membresias.filter((item) => item !== clubValue );
@@ -107,7 +114,7 @@ export default function ClubProfile() {
         <img className={styles.img}
           style={{ width: "40%", height: "100vh"}}
           alt="GameRoom"
-          src={"../GameRoom.png"}
+          src={"../public/GameRoom.png"}
         />
         <div className={styles.Right}>
           <Navbar/>
@@ -116,7 +123,7 @@ export default function ClubProfile() {
               <h1 className={styles.Name}>📺 {club[0].nombre} 🕹️</h1>
               <div className={styles.Text}>
                 <div className={styles.info}>
-                  <img className={styles.icon} alt="icon" src="../information.png" />
+                  <img className={styles.icon} alt="icon" src="../public/information.png" />
                   <h4 className={styles.Description}>{club[0].descripcion}</h4>
                 </div>
               <button className={styles.Afiliacion} onClick={() => {handleMembership()}}>{show}</button>
