@@ -62,7 +62,7 @@ function Register(){
   return (
     <div className={styles.All}>
       <div id={styles.Img} className={styles.Photo} ref={size.targetDivRef} style={{ width: size.targetWidth, height: size.targetHeight }}>
-        <img className={styles.Inicio} alt="Inicio" src="../../photo.jpg" style={{height: size.targetHeight }}/>
+        <img className={styles.Inicio} alt="Inicio" src="/photo.jpg" style={{height: size.targetHeight }}/>
       </div>
       <div className={styles.Information}   ref={size.sourceDivRef}>
         {popUp && <ErrorRegister/>}
